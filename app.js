@@ -3,7 +3,7 @@
    ════════════════════════════════════════ */
 
 const API_URL        = "https://openrouter.ai/api/v1/chat/completions";
-const API_KEY        = "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";
+const API_KEY        = "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";
 const MODEL_TRINITY  = "arcee-ai/trinity-mini:free";
 const MODEL_NEMOTRON = "nvidia/nemotron-nano-12b-v2-vl:free";
 const MODEL_STEP     = "stepfun/step-3.5-flash:free";
