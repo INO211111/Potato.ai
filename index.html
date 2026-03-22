@@ -95,7 +95,7 @@
           <div class="sp-price">$0 <span class="sp-per">/ forever</span></div>
           <div class="sp-tagline">Store purchases are optional.</div>
           <div class="sp-features">
-            <div class="sp-feat sp-feat--yes">✓ 50 credits every 1 hour</div>
+            <div class="sp-feat sp-feat--yes">✓ 2.5 credits every 1 hour</div>
             <div class="sp-feat sp-feat--yes">✓ Trinity Mini AI</div>
             <div class="sp-feat sp-feat--yes">✓ Basic code generation</div>
             <div class="sp-feat sp-feat--yes">✓ Up to 5 projects</div>
@@ -123,7 +123,7 @@
           </button>
           <div class="sp-divider-label">Everything in Free, plus:</div>
           <div class="sp-features">
-            <div class="sp-feat sp-feat--yes">✓ 50 credits every 30 min</div>
+            <div class="sp-feat sp-feat--yes">✓ 2.5 credits every 30 min</div>
             <div class="sp-feat sp-feat--yes">✓ All AI models unlocked</div>
             <div class="sp-feat sp-feat--yes">✓ GLM-4.5 Air (exclusive)</div>
             <div class="sp-feat sp-feat--yes">✓ Up to 25 projects</div>
@@ -192,6 +192,10 @@
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
       API Keys
     </div>
+    <div class="um-item um-item--danger" id="um-downgrade-btn" onclick="downgradeToFree(); closeUserMenu()" style="display:none">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Switch to Free Plan
+    </div>
   </div>
   <div class="user-menu-backdrop" id="user-menu-backdrop" onclick="closeUserMenu()"></div>
 
@@ -231,7 +235,7 @@
     <div class="cp-refill-bar">
       <div class="cp-refill-fill" id="cp-refill-fill"></div>
       <span class="cp-refill-label" id="cp-refill-label">Refills in 30m</span>
-      <span class="cp-refill-bonus">+50 credits</span>
+      <span class="cp-refill-bonus">+2.5 credits</span>
     </div>
   </div>
 
@@ -271,6 +275,13 @@
         <div class="sidebar-label">Projects</div>
         <div id="sidebar-projects-list"></div>
       </div>
+      <div class="sidebar-section" id="archives-section">
+        <div class="sidebar-label-row">
+          <span class="sidebar-label">Archived</span>
+          <span class="sidebar-label-count" id="archive-count">0/8</span>
+        </div>
+        <div id="sidebar-archives-list"></div>
+      </div>
       <div class="sidebar-spacer"></div>
       <div class="discord-card" id="discord-card" onclick="handleDiscordClick()">
         <div class="dc-icon">
@@ -282,6 +293,7 @@
           <strong>Discord</strong>
           <span>Join for gifts</span>
         </div>
+        <svg class="dc-arrow" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
     </div>
 
@@ -382,7 +394,7 @@
                     <div class="mo-left">
                       <span class="mo-dot mo-dot--step"></span>
                       <div class="mo-info">
-                        <div class="mo-name-row"><span class="mo-name">Step 3.5 Flash</span><span class="mo-badge mo-badge--free">FREE</span></div>
+                        <div class="mo-name-row"><span class="mo-name">Step 3.5 Flash</span><span class="mo-badge mo-badge--beta">BETA</span></div>
                         <div class="mo-provider">StepFun · Text only</div>
                         <div class="mo-ratings">
                           <div class="mo-rating-row"><span class="mo-rating-label">Credit Cost</span><span class="mo-cost mo-cost--mid">$$</span></div>
@@ -402,7 +414,7 @@
                       <span class="mo-dot mo-dot--nvidia"></span>
                       <div class="mo-info">
                         <div class="mo-name-row"><span class="mo-name">Nemotron Nano VL</span><span class="mo-badge mo-badge--free">FREE</span><span class="mo-badge mo-badge--vision">VISION</span></div>
-                        <div class="mo-provider">NVIDIA · Images supported</div>
+                        <div class="mo-provider">NVIDIA · Images on all plans</div>
                         <div class="mo-ratings">
                           <div class="mo-rating-row"><span class="mo-rating-label">Credit Cost</span><span class="mo-cost mo-cost--mid">$$</span></div>
                           <div class="mo-rating-row"><span class="mo-rating-label">Simple tasks</span><div class="mo-bars"><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar off"></span><span class="mo-bar off"></span></div></div>
@@ -422,8 +434,8 @@
                       <div class="mo-info">
                         <div class="mo-name-row">
                           <span class="mo-name">GLM-4.5 Air</span>
-                          <span class="mo-badge mo-badge--beta">BETA</span>
-                          <span class="mo-badge mo-badge--lock">🔒</span>
+                          <span class="mo-badge mo-badge--free">FREE</span>
+                          <span class="mo-badge mo-badge--lock" id="glm-lock-badge" style="display:none">🔒</span>
                         </div>
                         <div class="mo-provider">Z-AI · Fast &amp; capable</div>
                         <div class="mo-ratings">
@@ -431,9 +443,10 @@
                           <div class="mo-rating-row"><span class="mo-rating-label">Simple tasks</span><div class="mo-bars"><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar on"></span></div></div>
                           <div class="mo-rating-row"><span class="mo-rating-label">Complex tasks</span><div class="mo-bars"><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar on"></span><span class="mo-bar off"></span></div></div>
                         </div>
-                        <div class="mo-locked-hint">Get Beta Plan Free → Store Purchases</div>
+                        <div class="mo-locked-hint" id="glm-locked-hint">Get Beta Plan Free → Store Purchases</div>
                       </div>
                     </div>
+                    <svg class="mo-check" id="check-glm" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
                   </div>
 
                 </div>
